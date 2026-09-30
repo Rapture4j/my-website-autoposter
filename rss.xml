@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+  <title>Samuel Altar Blog</title>
+  <link>https://YOURUSERNAME.github.io/my-website-autoposter</link>
+  <description>Health tips and business mindset</description>
+  <lastBuildDate>Mon, 29 Sep 2026 09:00:00 GMT</lastBuildDate>
+  <item>
+    <title>3 Morning Habits That Changed My Energy</title>
+    <link>https://YOURUSERNAME.github.io/my-website-autoposter/blog1.html</link>
+    <description>Start with water, 5 min stretching, and planning your top 3 tasks. Simple but powerful.</description>
+    <pubDate>Mon, 29 Sep 2026 09:00:00 GMT</pubDate>
+    <guid>https://YOURUSERNAME.github.io/my-website-autoposter/blog1.html</guid>
+  </item>
+  <item>
+    <title>How I Manage My Side Business Without Quitting My Job</title>
+    <link>https://YOURUSERNAME.github.io/my-website-autoposter/blog2.html</link>
+    <description>It's not about more time, it's about 1 focused hour daily. Here is my simple system.</description>
+    <pubDate>Sun, 28 Sep 2026 09:00:00 GMT</pubDate>
+    <guid>https://YOURUSERNAME.github.io/my-website-autoposter/blog2.html</guid>
+  </item>
+</channel>
+</rss>

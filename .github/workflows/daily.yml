@@ -22,9 +22,11 @@ jobs:
         run: |
           python - << 'PY'
           import feedparser, requests, os
-          rss_url = os.environ['RSS_URL']
-          page_id = os.environ['PAGE_ID']
-          token = os.environ['PAGE_TOKEN']
+          rss_url = os.environ['RSS_URL'].strip().strip('"').strip("'")
+          page_id = os.environ['PAGE_ID'].strip().strip('"').strip("'")
+          token = os.environ['PAGE_TOKEN'].strip().strip('"').strip("'").strip()
+
+          print(f"DEBUG: PAGE_ID={page_id}, TOKEN length={len(token)}, RSS_URL set={bool(rss_url)}")
 
           feed = feedparser.parse(rss_url)
           if not feed.entries:
@@ -38,7 +40,7 @@ jobs:
 
           message = f"{title}\n\n{summary}\n\nRead more: {link}"
 
-          url = f"https://graph.facebook.com/{page_id}/feed"
+          url = f"https://graph.facebook.com/v26.0/{page_id}/feed"
           data = {
               "message": message,
               "link": link,

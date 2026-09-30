@@ -1,1 +1,52 @@
+name: Post RSS to Facebook
+on:
+  schedule:
+    - cron: '0 8 * * *' # every day 8am UTC
+  workflow_dispatch:
 
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: pip install feedparser requests
+      - name: Post latest RSS to Facebook Page
+        env:
+          PAGE_ID: ${{ secrets.PAGE_ID }}
+          PAGE_TOKEN: ${{ secrets.PAGE_TOKEN }}
+          RSS_URL: ${{ secrets.RSS_URL }}
+        run: |
+          python - << 'PY'
+          import feedparser, requests, os
+          rss_url = os.environ['RSS_URL']
+          page_id = os.environ['PAGE_ID']
+          token = os.environ['PAGE_TOKEN']
+
+          feed = feedparser.parse(rss_url)
+          if not feed.entries:
+              print("No RSS entries found")
+              exit(0)
+
+          latest = feed.entries[0]
+          title = latest.title
+          link = latest.link
+          summary = latest.get('summary', '')[:200]
+
+          message = f"{title}\n\n{summary}\n\nRead more: {link}"
+
+          url = f"https://graph.facebook.com/{page_id}/feed"
+          data = {
+              "message": message,
+              "link": link,
+              "access_token": token
+          }
+          r = requests.post(url, data=data)
+          print(r.text)
+          if r.status_code!= 200:
+              raise Exception(f"Facebook post failed: {r.text}")
+          print("Posted to Facebook Page!")
+          PY
